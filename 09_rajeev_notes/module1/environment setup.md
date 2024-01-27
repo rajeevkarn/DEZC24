@@ -55,5 +55,7 @@ pgcli -h localhost -p 5432 -u root -d ny_taxi
 ## kill all docker images -- docker kill $(docker ps -q)
 
 
+test
+
 
 
