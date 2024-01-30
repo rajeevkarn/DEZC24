@@ -1,0 +1,56 @@
+Q1)Knowing docker tags
+ANS - --rm
+
+Q2) Understanding docker first run
+ANS  - 0.42.0
+
+
+Q3)Count records
+select 
+count(*) 
+from public.green_taxi_2019 
+where 
+date(lpep_pickup_datetime)  ='2019-09-18'
+and date(lpep_dropoff_datetime)  ='2019-09-18'
+ANS - 15612
+
+
+Q4)Largest trip for each day
+select 
+date(lpep_pickup_datetime)
+
+from public.green_taxi_2019
+where trip_distance = (select max(trip_distance) from public.green_taxi_2019 )
+
+where 
+date(lpep_pickup_datetime)  ='2019-09-18'
+and date(lpep_dropoff_datetime)  ='2019-09-18'
+trip_distance
+limit 1
+ANS - 2019-09-26
+
+Q5)Three biggest pick up Boroughs
+select
+"Borough"
+, sum(total_amount) as amount
+from green_taxi_2019 t1 -- limit 1
+left outer join taxi_zone t2
+ON t1."PULocationID" = t2."LocationID"
+where 
+date(lpep_pickup_datetime)  ='2019-09-18'
+and "Borough" != 'Unknown'
+group by "Borough"
+order by amount desc
+ANS - "Brooklyn" "Manhattan" "Queens"
+
+Q6)Largest tip
+select t3."Zone"
+from green_taxi_2019 t1 -- limit 1
+left outer join taxi_zone t2
+ON t1."PULocationID" = t2."LocationID"
+left outer join taxi_zone t3
+ON t1."DOLocationID" = t3."LocationID"
+where t2."Zone" = 'Astoria'
+order by t1.tip_amount Desc
+Limit 1
+ANS - "JFK Airport"
